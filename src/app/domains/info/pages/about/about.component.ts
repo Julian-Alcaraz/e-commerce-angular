@@ -1,13 +1,17 @@
 import { Component, signal } from '@angular/core';
 import { CounterComponent } from '../../../shared/components/counter/counter.component';
 import { WaveAudioComponent } from '../../components/wave-audio/wave-audio.component';
+import { HightlightDirective } from '@shared/directives/hightlight.directive';
+import { HeaderComponent } from '@shared/components/header/header.component';
 
 @Component({
   selector: 'app-about',
   standalone: true,
   imports: [
     CounterComponent,
-    WaveAudioComponent
+    WaveAudioComponent,
+    HightlightDirective,
+    HeaderComponent
   ],
   templateUrl: './about.component.html',
   styleUrl: './about.component.css'

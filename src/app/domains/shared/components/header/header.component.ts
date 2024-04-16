@@ -1,31 +1,30 @@
-import { Component, Input, ViewChild, signal } from '@angular/core';
+import { Component, Input,  SimpleChanges , inject, signal } from '@angular/core';
 import { Product } from '../../models/product.model';
+import { CartService } from '@shared/services/cart.service';
+import { RouterLinkWithHref } from '@angular/router';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [],
+  imports: [RouterLinkWithHref],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
-export class HeaderComponent {
-  @Input({required:true}) cart: Product[]=[];
 
+export class HeaderComponent   {
+  private _cartService = inject(CartService);
+  
   hideSideMenu = signal(true);
+
+  cart = this._cartService.cart;
+  total = this._cartService.total;
 
   toogleSideMenu(){
     this.hideSideMenu.update(prevState => !prevState)
   }
 
-  calculteTotal(){
-    var total=0;
-    this.cart.map((product)=> total= total+ product.price )
-    return total
-  }
-
-
   deleteProduct(id:number){
-    // los borra pero no de list component
-    this.cart = this.cart.filter((product)=> product.id != id )
+    this._cartService.deleteFromCart(id)
   }
+
 }

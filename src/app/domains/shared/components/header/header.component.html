@@ -16,7 +16,7 @@
       <ul class="flex space-x-6">
         <li>
           <a
-            href="#"
+           routerLink="/"
             class="block underline hover:underline"
             aria-current="page"
             >Home</a
@@ -24,14 +24,14 @@
         </li>
         <li>
           <a
-            href="#"
+            routerLink="/about"
             class="block hover:underline"
             >About</a
           >
         </li>
         <li>
           <a
-            href="#"
+            routerLink="/services"
             class="block hover:underline"
             >Services</a
           >
@@ -40,8 +40,8 @@
     </div>
     <div class="flex items-center">
       <button class="p-2 border rounded relative" (click)="toogleSideMenu()">
-        @if (cart.length>0) {
-          <div class="absolute -top-3 -left-3 rounded h-5 w-5 bg-black text-white text-xs">{{cart.length}} </div>
+        @if (cart().length>0) {
+          <div class="absolute -top-3 -left-3 rounded h-5 w-5 bg-black text-white text-xs">{{cart().length}} </div>
         }
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -85,29 +85,15 @@
     </button>
   </div>
   <div>
-    @for (product of cart; track $index) {
-        <div class="flex flex-wrap items-center  justify-between mt-3 text-sm font-medium bg-gray-300 p-2 ">
-          <h2>{{product.title}}</h2>
-          <h2>${{product.price}}</h2>
-          <button (click)="deleteProduct(product.id)">{{product.id}}
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-              class="w-6 h-6">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-        </div>
-       
-    }
     <div class="pt-4 flex flex-col">
-      @for (product of cart; track $index) {
-        <div class="flex justify-between items-center space-y-2 px-2 bg-gray-300">
+      @for (product of cart(); track $index) {
+        <div class="flex justify-between items-center space-y-2 my-1 py-2 px-2 bg-gray-300">
           <div class="flex space-x-2 items-center">
-            <img  class="w-6 h-6" [src]="product.image" [alt]="product.title">
+            <img  class="w-6 h-6" [src]="product.images[0]" [alt]="product.title">
             <h3>{{product.title}}</h3>
-
           </div>
           {{product.price}}
-          <button (click)="deleteProduct(product.id)">{{product.id}}
+          <button (click)="deleteProduct(product.id)">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
               class="w-6 h-6">
               <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -116,10 +102,10 @@
         </div>
       }
     </div>
-    <div class=" mt-3 bottom-0 ">
+    <div class=" position mt-3 bottom-0 ">
       <div class="flex flex-wrap items-center justify-between text-sm font-medium bg-gray-300 p-2">
         <h2>Total: </h2>
-        <h2 class="mr-3">${{calculteTotal()}}</h2>
+        <h2 class="mr-3">${{total()}}</h2>
       </div>
     </div>
   </div>
